@@ -120,6 +120,13 @@ url2 = st.text_input("Enter URL 2")
 
 if st.button("Compare"):
     if url1 and url2:
-        output_file = process_webpages(url1, url2)
-        with open(output_file, "r") as file:
-            st.download_button("Download Results", file, file_name="output_details.json")
+        with st.spinner("Processing... Please wait."):
+            try:
+                output_file = process_webpages(url1, url2)
+                with open(output_file, "r") as file:
+                    st.success("Processing completed successfully!")
+                    st.download_button("Download Results", file, file_name="output_details.json")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
+    else:
+        st.warning("Please enter both URL 1 and URL 2 before comparing.")
