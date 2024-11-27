@@ -54,13 +54,13 @@ def extract_components(soup):
 
 def hash_component(component):
     component_str = f"{component['item']}-{component.get('id')}-{component.get('class')}-{component['text']}"
-    return hashlib.md5(component_str.encode()).hexdigest()
+    return hashlib.md5(component_str.encode()).hexdigest()       # MD5(message-digest algo) will create a 32-char hexadecimal string 
 
 def components_to_dict(components):
-    component_dict = {}
+    component_dict = {}      # {key,value} key->hash value of component \\ value-> full compoent as string \\ {2o7m9hArEi9.. , component}
     for component in components:
-        component_key = hash_component(component)
-        component_dict[component_key] = component
+        component_key = hash_component(component)   # key
+        component_dict[component_key] = component   # value
     return component_dict
 
 def detect_changes(old_components, new_components):
@@ -69,7 +69,7 @@ def detect_changes(old_components, new_components):
     new_components_dict = components_to_dict(new_components)
     
     for old_hash, old_component in old_components_dict.items():
-        if old_hash not in new_components_dict:
+        if old_hash not in new_components_dict:      # old_dist{old key, old value} --- compared --- new_dict{new key, new value}
             changes["REMOVED"].append(old_component)
         elif old_component != new_components_dict[old_hash]:
             modified_entry = {
