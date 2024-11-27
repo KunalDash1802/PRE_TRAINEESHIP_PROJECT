@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webpage-comparator-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: webpage-comparator
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8501
